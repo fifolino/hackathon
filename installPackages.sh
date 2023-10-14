@@ -31,7 +31,6 @@ function start(){
 
 function install()
 {
-    mkdir "bdd";
     for dir in */; do
         cd $rootPath/$dir
         if [ -f "package.json" ]; then
