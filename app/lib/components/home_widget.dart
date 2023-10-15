@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
 
@@ -74,6 +74,7 @@ class PrioTable extends StatelessWidget {
       dataRowColor: MaterialStateProperty.resolveWith<Color>(
           (Set<MaterialState> states) => Colors.white),
       headingTextStyle: const TextStyle(fontSize: 22, color: Colors.white),
+      dataRowHeight: MediaQuery.of(context).size.height * 0.07,
       dataTextStyle: const TextStyle(fontSize: 20, color: Color(0xFF1A3C8C)),
       columns: data.first.keys
           .map((key) => DataColumn(

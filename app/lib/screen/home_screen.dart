@@ -1,7 +1,5 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
-import '../components/HomeWidget.dart';
+import '../components/home_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -82,14 +80,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         setSelected(2);
                       },
                       isSelected: isSelected(2),
-                    ),
-                    FilterButton(
-                      icon: Icons.cell_tower,
-                      text: "Zones sensibles",
-                      onClick: () {
-                        setSelected(3);
-                      },
-                      isSelected: isSelected(3),
                     ),
                   ]),
                   InkWell(
