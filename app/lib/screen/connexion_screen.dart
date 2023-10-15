@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
-
 class PasswordTextField extends StatefulWidget {
-  const PasswordTextField({super.key});
+  final TextEditingController controller;
+
+  const PasswordTextField({required this.controller, Key? key}) : super(key: key);
 
   @override
   State<PasswordTextField> createState() => _PasswordTextFieldState();
@@ -17,6 +18,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
       width: MediaQuery.of(context).size.width * 0.2,
       margin: const EdgeInsets.only(top: 24),
       child: TextField(
+        controller: widget.controller,
         style: const TextStyle(
             color: Colors.white, fontSize: 18, fontWeight: FontWeight.w400),
         decoration: InputDecoration(
@@ -57,6 +59,24 @@ class ConnexionScreen extends StatefulWidget {
 }
 
 class _ConnexionScreenState extends State<ConnexionScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  String errorMessage = '';
+
+  @override
+  void initState() {
+    super.initState();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,14 +106,15 @@ class _ConnexionScreenState extends State<ConnexionScreen> {
             Container(
               width: MediaQuery.of(context).size.width * 0.2,
               margin: const EdgeInsets.only(top: 100),
-              child: const TextField(
-                style: TextStyle(
+              child: TextField(
+                controller: emailController,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
                   fontFamily: 'Roboto',
                   fontWeight: FontWeight.w100,
                 ),
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Email',
                   labelStyle: TextStyle(
                     color: Color.fromRGBO(255, 255, 255, 0.5),
@@ -108,7 +129,16 @@ class _ConnexionScreenState extends State<ConnexionScreen> {
                 ),
               ),
             ),
-            const PasswordTextField(),
+            PasswordTextField(
+              controller: passwordController,
+            ),
+            Text(
+              errorMessage,
+              style: const TextStyle(
+                color: Color.fromARGB(255, 255, 160, 154),
+                fontSize: 16,
+              ),
+            ),
             Container(
               margin: const EdgeInsets.only(top: 100),
               width: 308,
@@ -133,10 +163,19 @@ class _ConnexionScreenState extends State<ConnexionScreen> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen()),
-                  );
+                  if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+                    setState(() {
+                      errorMessage = 'Please fill in both email and password fields.';
+                    });
+                  } else {
+                    setState(() {
+                      errorMessage = '';
+                    });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomeScreen()),
+                    );
+                  }
                 },
                 child: const Text(
                   'Se connecter',
