@@ -91,11 +91,22 @@ class PrioTable extends StatelessWidget {
 
 class ChangeIndex extends StatelessWidget {
   final int index;
+  final Function(int) onPageSelected;
 
-  const ChangeIndex({super.key, required this.index});
+  const ChangeIndex({
+    Key? key,
+    required this.index,
+    required this.onPageSelected,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox();
+    return TextButton(
+      onPressed: () => onPageSelected(index),
+      child: Text('$index', style: TextStyle(fontSize: 16)),
+      style: TextButton.styleFrom(
+        primary: Color(0xFF1A3C8C), // Customize the color as needed
+      ),
+    );
   }
 }

@@ -11,6 +11,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int selectedPage = 1;
+
+  void onPageSelected(int index) {
+    setState(() {
+      selectedPage = index;
+    });
+  }
+
   int select = -1;
 
   isSelected(int index) {
@@ -124,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius:
                     const BorderRadius.horizontal(left: Radius.circular(25)),
               ),
-              child: const Column(
+              child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -158,7 +166,36 @@ class _HomeScreenState extends State<HomeScreen> {
                         "Zone sensible": "Hors QPV"
                       },
                     ]),
-                    ChangeIndex(index: 0),
+                    Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    if (selectedPage > 1) {
+                      setState(() {
+                        selectedPage--;
+                      });
+                    }
+                  },
+                  child: Text('<', style: TextStyle(fontSize: 16)),
+                  style: TextButton.styleFrom(primary: Color(0xFF1A3C8C)),
+                ),
+                ChangeIndex(index: 1, onPageSelected: onPageSelected),
+                ChangeIndex(index: 2, onPageSelected: onPageSelected),
+                ChangeIndex(index: 3, onPageSelected: onPageSelected),
+                TextButton(
+                  onPressed: () {
+                    if (selectedPage < 3) {
+                      setState(() {
+                        selectedPage++;
+                      });
+                    }
+                  },
+                  child: Text('>', style: TextStyle(fontSize: 16)),
+                  style: TextButton.styleFrom(primary: Color(0xFF1A3C8C)),
+                ),
+              ],
+            ),
                   ]),
             ),
           ),
