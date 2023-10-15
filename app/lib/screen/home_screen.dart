@@ -91,8 +91,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ]),
                   InkWell(
-                    // TODO: déconnecte
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                     child: const Row(children: [
                       SizedBox(width: 10),
                       Icon(Icons.logout_outlined, color: Colors.white),
@@ -125,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    SizedBox(height: MediaQuery.of(context).size.height*0.04),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                     const PrioTable(data: [
                       {
                         "Classement de priorité": "1",
@@ -199,35 +200,37 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ]),
                     Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    if (selectedPage > 1) {
-                      setState(() {
-                        selectedPage--;
-                      });
-                    }
-                  },
-                  child: Text('<', style: TextStyle(fontSize: 16)),
-                  style: TextButton.styleFrom(primary: Color(0xFF1A3C8C)),
-                ),
-                ChangeIndex(index: 1, onPageSelected: onPageSelected),
-                ChangeIndex(index: 2, onPageSelected: onPageSelected),
-                ChangeIndex(index: 3, onPageSelected: onPageSelected),
-                TextButton(
-                  onPressed: () {
-                    if (selectedPage < 3) {
-                      setState(() {
-                        selectedPage++;
-                      });
-                    }
-                  },
-                  child: Text('>', style: TextStyle(fontSize: 16)),
-                  style: TextButton.styleFrom(primary: Color(0xFF1A3C8C)),
-                ),
-              ],
-            ),
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            if (selectedPage > 1) {
+                              setState(() {
+                                selectedPage--;
+                              });
+                            }
+                          },
+                          child: Text('<', style: TextStyle(fontSize: 16)),
+                          style:
+                              TextButton.styleFrom(primary: Color(0xFF1A3C8C)),
+                        ),
+                        ChangeIndex(index: 1, onPageSelected: onPageSelected),
+                        ChangeIndex(index: 2, onPageSelected: onPageSelected),
+                        ChangeIndex(index: 3, onPageSelected: onPageSelected),
+                        TextButton(
+                          onPressed: () {
+                            if (selectedPage < 3) {
+                              setState(() {
+                                selectedPage++;
+                              });
+                            }
+                          },
+                          child: Text('>', style: TextStyle(fontSize: 16)),
+                          style:
+                              TextButton.styleFrom(primary: Color(0xFF1A3C8C)),
+                        ),
+                      ],
+                    ),
                   ]),
             ),
           ),
