@@ -51,15 +51,16 @@ class FilterButton extends StatelessWidget {
 
 class PrioTable extends StatelessWidget {
   final List<Map<String, String>> data;
-  const PrioTable({super.key, required this.data});
+  final int page;
+  const PrioTable({super.key, required this.data, required this.page});
 
   @override
   Widget build(BuildContext context) {
     List<DataRow> rows = [];
 
-    for (var item in data) {
+    for (int i = 0 + 7 * (page - 1); i < 7 + 7 * (page - 1); i++) {
       List<DataCell> cells = [];
-      item.forEach((key, value) =>
+      data[i].forEach((key, value) =>
           cells.add(DataCell(Center(child: Text(value, softWrap: true)))));
       rows.add(DataRow(cells: cells));
     }
