@@ -68,14 +68,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       isSelected: isSelected(-1),
                     ),
                     FilterButton(
-                      icon: Icons.report_problem_outlined,
-                      text: "Réclamations",
-                      onClick: () {
-                        setSelected(0);
-                      },
-                      isSelected: isSelected(0),
-                    ),
-                    FilterButton(
                       icon: Icons.energy_savings_leaf_outlined,
                       text: "Énergétique",
                       onClick: () {
@@ -124,10 +116,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius:
                     const BorderRadius.horizontal(left: Radius.circular(25)),
               ),
-              child: const Column(
+              child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Liste des rénovations par ordre de priorité',
                       style: TextStyle(
                         color: Color(0xFF1A3C8C),
@@ -135,30 +127,80 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    SizedBox(height: 20),
-                    PrioTable(data: [
+                    SizedBox(height: MediaQuery.of(context).size.height*0.04),
+                    const PrioTable(data: [
                       {
                         "Classement de priorité": "1",
                         "Code résidence ACM": "0012",
                         "Ville": "Montpellier",
-                        "Date de construction du bâtiment": "1994",
-                        "Nombre de résidents": "32",
+                        "Date de construction": "1994",
+                        "Prestations": "8",
                         "DPE": "D",
                         "GES": "E",
-                        "Zone sensible": "QPV"
+                        "Zone sensible": "QPV",
                       },
                       {
                         "Classement de priorité": "2",
                         "Code résidence ACM": "0018",
                         "Ville": "Paris",
-                        "Date de construction du bâtiment": "2002",
-                        "Nombre de résidents": "65",
+                        "Date de construction": "2002",
+                        "Prestations": "8",
                         "DPE": "C",
                         "GES": "C",
-                        "Zone sensible": "Hors QPV"
+                        "Zone sensible": "Hors QPV",
+                      },
+                      {
+                        "Classement de priorité": "3",
+                        "Code résidence ACM": "0012",
+                        "Ville": "Montpellier",
+                        "Date de construction": "1994",
+                        "Prestations": "8",
+                        "DPE": "D",
+                        "GES": "E",
+                        "Zone sensible": "QPV",
+                      },
+                      {
+                        "Classement de priorité": "4",
+                        "Code résidence ACM": "0018",
+                        "Ville": "Paris",
+                        "Date de construction": "2002",
+                        "Prestations": "8",
+                        "DPE": "C",
+                        "GES": "C",
+                        "Zone sensible": "Hors QPV",
+                      },
+                      {
+                        "Classement de priorité": "5",
+                        "Code résidence ACM": "0012",
+                        "Ville": "Montpellier",
+                        "Date de construction": "1994",
+                        "Prestations": "8",
+                        "DPE": "D",
+                        "GES": "E",
+                        "Zone sensible": "QPV",
+                      },
+                      {
+                        "Classement de priorité": "6",
+                        "Code résidence ACM": "0018",
+                        "Ville": "Paris",
+                        "Date de construction": "2002",
+                        "Prestations": "8",
+                        "DPE": "C",
+                        "GES": "C",
+                        "Zone sensible": "Hors QPV",
+                      },
+                      {
+                        "Classement de priorité": "7",
+                        "Code résidence ACM": "0012",
+                        "Ville": "Montpellier",
+                        "Date de construction": "1994",
+                        "Prestations": "8",
+                        "DPE": "D",
+                        "GES": "E",
+                        "Zone sensible": "QPV",
                       },
                     ]),
-                    ChangeIndex(index: 0),
+                    const ChangeIndex(index: 0),
                   ]),
             ),
           ),

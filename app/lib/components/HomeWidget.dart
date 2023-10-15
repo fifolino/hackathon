@@ -37,10 +37,11 @@ class FilterButton extends StatelessWidget {
             Icon(icon,
                 color: (isSelected) ? const Color(0xFF1A3C8C) : Colors.white),
             const SizedBox(width: 25),
-            Text(text,
-                style: TextStyle(
-                    color:
-                        (isSelected) ? const Color(0xFF1A3C8C) : Colors.white)),
+            Text(
+              text,
+              style: TextStyle(
+                  color: (isSelected) ? const Color(0xFF1A3C8C) : Colors.white),
+            ),
           ]),
         ),
       ),
@@ -58,33 +59,31 @@ class PrioTable extends StatelessWidget {
 
     for (var item in data) {
       List<DataCell> cells = [];
-      item.forEach((key, value) => cells.add(DataCell(Text(value))));
+      item.forEach((key, value) =>
+          cells.add(DataCell(Center(child: Text(value, softWrap: true)))));
       rows.add(DataRow(cells: cells));
     }
 
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.8,
-      color: Colors.amber,
-      child:
-          //  ListView(
-          //     scrollDirection: Axis.horizontal,
-          //     shrinkWrap: true,
-          //     children: [
-          DataTable(
-        decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-        headingRowHeight: 60,
-        headingRowColor: MaterialStateProperty.resolveWith<Color>(
-          (Set<MaterialState> states) => const Color.fromARGB(255, 26, 60, 140),
-        ),
-        dataRowColor: MaterialStateProperty.resolveWith<Color>(
-            (Set<MaterialState> states) => Colors.white),
-        headingTextStyle: const TextStyle(fontSize: 26, color: Colors.white),
-        dataTextStyle: const TextStyle(fontSize: 20, color: Color(0xFF1A3C8C)),
-        columns:
-            data.first.keys.map((key) => DataColumn(label: Text(key))).toList(),
-        rows: rows,
+    return DataTable(
+      columnSpacing: 0,
+      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+      headingRowHeight: 85,
+      headingRowColor: MaterialStateProperty.resolveWith<Color>(
+        (Set<MaterialState> states) => const Color.fromARGB(255, 26, 60, 140),
       ),
-      // ]),
+      dataRowColor: MaterialStateProperty.resolveWith<Color>(
+          (Set<MaterialState> states) => Colors.white),
+      headingTextStyle: const TextStyle(fontSize: 22, color: Colors.white),
+      dataTextStyle: const TextStyle(fontSize: 20, color: Color(0xFF1A3C8C)),
+      columns: data.first.keys
+          .map((key) => DataColumn(
+                label: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.09,
+                    child:
+                        Text(key, softWrap: true, textAlign: TextAlign.center)),
+              ))
+          .toList(),
+      rows: rows,
     );
   }
 }
