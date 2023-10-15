@@ -12,7 +12,7 @@ class _ConnexionScreenState extends State<ConnexionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0x001a3c8c),
+      backgroundColor: const Color(0x001a3c8c),
       body: Container(
       decoration: const BoxDecoration(
           gradient: LinearGradient(
