@@ -16,6 +16,7 @@ class _ConnexionScreenState extends State<ConnexionScreen> {
   final password = TextEditingController();
   bool _obscureText = true;
   bool error = false;
+  String errorMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -128,17 +129,28 @@ class _ConnexionScreenState extends State<ConnexionScreen> {
                   ),
                 ),
                 onPressed: () async {
-                  bool isLogin =
-                      await Request().login(email.text, password.text);
+                  if (email.text.isEmpty || password.text.isEmpty) {
+                    setState(() {
+                      error = true;
+                      errorMessage = 'Veuillez entrer un email et un mot de passe valide.';
+                    });
+                    return;
+                  }
+                  bool isLogin = await Request().login(email.text, password.text);
                   if (isLogin) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen()),
+                      MaterialPageRoute(builder: (context) => const HomeScreen()),
                     );
-                    setState(() => error = false);
+                    setState(() {
+                      error = false;
+                      errorMessage = '';
+                    });
                   } else {
-                    setState(() => error = true);
+                    setState(() {
+                      error = true;
+                      errorMessage = 'Veuillez entrer un email et un mot de passe valide.';
+                    });
                   }
                 },
                 child: const Text(
@@ -150,7 +162,15 @@ class _ConnexionScreenState extends State<ConnexionScreen> {
                 ),
               ),
             ),
-            if (error) const Text("Connection refusée"),
+            if (error) Container(
+              margin: const EdgeInsets.only(top: 20), // Add a top margin
+              child: const Text(
+                'Veuillez entrer un email et un mot de passe valide.',
+                style: TextStyle(
+                  color: Color.fromARGB(255, 255, 184, 179),
+                ),
+              ),
+            ),
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.2,
