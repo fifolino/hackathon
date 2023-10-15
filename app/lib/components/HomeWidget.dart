@@ -49,11 +49,43 @@ class FilterButton extends StatelessWidget {
 }
 
 class PrioTable extends StatelessWidget {
-  const PrioTable({super.key});
+  final List<Map<String, String>> data;
+  const PrioTable({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox();
+    List<DataRow> rows = [];
+
+    for (var item in data) {
+      List<DataCell> cells = [];
+      item.forEach((key, value) => cells.add(DataCell(Text(value))));
+      rows.add(DataRow(cells: cells));
+    }
+
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.8,
+      color: Colors.amber,
+      child:
+          //  ListView(
+          //     scrollDirection: Axis.horizontal,
+          //     shrinkWrap: true,
+          //     children: [
+          DataTable(
+        decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+        headingRowHeight: 60,
+        headingRowColor: MaterialStateProperty.resolveWith<Color>(
+          (Set<MaterialState> states) => const Color.fromARGB(255, 26, 60, 140),
+        ),
+        dataRowColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) => Colors.white),
+        headingTextStyle: const TextStyle(fontSize: 26, color: Colors.white),
+        dataTextStyle: const TextStyle(fontSize: 20, color: Color(0xFF1A3C8C)),
+        columns:
+            data.first.keys.map((key) => DataColumn(label: Text(key))).toList(),
+        rows: rows,
+      ),
+      // ]),
+    );
   }
 }
 

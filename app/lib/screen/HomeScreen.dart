@@ -38,79 +38,80 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Row(children: [
           Expanded(
             flex: 1,
-            child: Column(children: [
-              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-              Image(
-                image: const AssetImage("../../assets/altemed_logo.png"),
-                width: MediaQuery.of(context).size.width * 0.2,
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.17),
-              const Row(children: [
-                SizedBox(width: 10),
-                Icon(Icons.filter_alt, color: Colors.white),
-                SizedBox(width: 5),
-                Text("Filtres",
-                    style: TextStyle(color: Colors.white, fontSize: 18)),
-              ]),
-              const Divider(
-                indent: 30,
-                endIndent: 30,
-                color: Colors.white,
-                thickness: 0.3,
-              ),
-              FilterButton(
-                icon: Icons.stacked_bar_chart,
-                text: "Général",
-                onClick: () {
-                  setSelected(-1);
-                },
-                isSelected: isSelected(-1),
-              ),
-              FilterButton(
-                icon: Icons.report_problem_outlined,
-                text: "Réclamations",
-                onClick: () {
-                  setSelected(0);
-                },
-                isSelected: isSelected(0),
-              ),
-              FilterButton(
-                icon: Icons.energy_savings_leaf_outlined,
-                text: "Énergétique",
-                onClick: () {
-                  setSelected(1);
-                },
-                isSelected: isSelected(1),
-              ),
-              FilterButton(
-                icon: Icons.build_circle_outlined,
-                text: "Prestations",
-                onClick: () {
-                  setSelected(2);
-                },
-                isSelected: isSelected(2),
-              ),
-              FilterButton(
-                icon: Icons.cell_tower,
-                text: "Zones sensibles",
-                onClick: () {
-                  setSelected(3);
-                },
-                isSelected: isSelected(3),
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.27),
-              InkWell(
-                // TODO: déconnecte
-                onTap: () {},
-                child: const Row(children: [
-                  SizedBox(width: 10),
-                  Icon(Icons.logout_outlined, color: Colors.white),
-                  SizedBox(width: 5),
-                  Text("Se déconnecter",
-                      style: TextStyle(color: Colors.white, fontSize: 16)),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Image(
+                    image: const AssetImage("../../assets/altemed_logo.png"),
+                    width: MediaQuery.of(context).size.width * 0.2,
+                  ),
+                  Column(children: [
+                    const Row(children: [
+                      SizedBox(width: 10),
+                      Icon(Icons.filter_alt, color: Colors.white),
+                      SizedBox(width: 5),
+                      Text("Filtres",
+                          style: TextStyle(color: Colors.white, fontSize: 18)),
+                    ]),
+                    const Divider(
+                      indent: 30,
+                      endIndent: 30,
+                      color: Colors.white,
+                      thickness: 0.3,
+                    ),
+                    FilterButton(
+                      icon: Icons.stacked_bar_chart,
+                      text: "Général",
+                      onClick: () {
+                        setSelected(-1);
+                      },
+                      isSelected: isSelected(-1),
+                    ),
+                    FilterButton(
+                      icon: Icons.report_problem_outlined,
+                      text: "Réclamations",
+                      onClick: () {
+                        setSelected(0);
+                      },
+                      isSelected: isSelected(0),
+                    ),
+                    FilterButton(
+                      icon: Icons.energy_savings_leaf_outlined,
+                      text: "Énergétique",
+                      onClick: () {
+                        setSelected(1);
+                      },
+                      isSelected: isSelected(1),
+                    ),
+                    FilterButton(
+                      icon: Icons.build_circle_outlined,
+                      text: "Prestations",
+                      onClick: () {
+                        setSelected(2);
+                      },
+                      isSelected: isSelected(2),
+                    ),
+                    FilterButton(
+                      icon: Icons.cell_tower,
+                      text: "Zones sensibles",
+                      onClick: () {
+                        setSelected(3);
+                      },
+                      isSelected: isSelected(3),
+                    ),
+                  ]),
+                  InkWell(
+                    // TODO: déconnecte
+                    onTap: () {},
+                    child: const Row(children: [
+                      SizedBox(width: 10),
+                      Icon(Icons.logout_outlined, color: Colors.white),
+                      SizedBox(width: 5),
+                      Text("Se déconnecter",
+                          style: TextStyle(color: Colors.white, fontSize: 16)),
+                    ]),
+                  ),
                 ]),
-              ),
-            ]),
           ),
           Expanded(
             flex: 5,
@@ -118,10 +119,10 @@ class _HomeScreenState extends State<HomeScreen> {
               padding:
                   EdgeInsets.all(MediaQuery.of(context).size.height * 0.06),
               height: MediaQuery.of(context).size.height,
-              decoration: const BoxDecoration(
-                color: Colors.white,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.9),
                 borderRadius:
-                    BorderRadius.horizontal(left: Radius.circular(25)),
+                    const BorderRadius.horizontal(left: Radius.circular(25)),
               ),
               child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,6 +135,30 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
+                    SizedBox(height: 20),
+                    PrioTable(data: [
+                      {
+                        "Classement de priorité": "1",
+                        "Code résidence ACM": "0012",
+                        "Ville": "Montpellier",
+                        "Date de construction du bâtiment": "1994",
+                        "Nombre de résidents": "32",
+                        "DPE": "D",
+                        "GES": "E",
+                        "Zone sensible": "QPV"
+                      },
+                      {
+                        "Classement de priorité": "2",
+                        "Code résidence ACM": "0018",
+                        "Ville": "Paris",
+                        "Date de construction du bâtiment": "2002",
+                        "Nombre de résidents": "65",
+                        "DPE": "C",
+                        "GES": "C",
+                        "Zone sensible": "Hors QPV"
+                      },
+                    ]),
+                    ChangeIndex(index: 0),
                   ]),
             ),
           ),
