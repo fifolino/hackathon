@@ -1,15 +1,56 @@
-let http = require("http");
-let url = require("url");
-let os = require("os");
+const express = require("express");
+const bodyParser = require("body-parser");
+const api = express();
+const cors = require("cors");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const PORT = 8080;
 
-http.createServer(function(request, response){
-    response.writeHead(200, {"Content-Type": "text/html"});
-    response.write("Server from Kali Linux<br>");
-    response.write(`Host: ${os.hostname}<br>`);
-    response.write(`Path: ${os.platform}<br>`);
-    response.end(`Uptime: ${os.uptime}`);
-}).listen(PORT);
+const login = require("./routers/login.js");
+const register = require("./routers/register.js");
+const residences = require('./routers/residences.js')
+
+// Permet de récupérer des corps formats JSON
+api.use(bodyParser.json());
+
+api.use(cors("*"));
+
+const authenticateJWT = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+
+  if (authHeader) {
+    const token = authHeader.split(" ")[1];
+
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+
+      req.user = user;
+      next();
+    });
+  } else {
+    res.sendStatus(401);
+  }
+};
+
+// ############## ROUTES ############### //
+api.get("/", (req, res) => {
+  res.send("Bienvenue sur l'api d'AMC Habitat");
+});
+api.use("/login", login);
+api.use("/register", register);
+api.use("/residences", residences);
+// Access only if the user connected
+api.get("/home", authenticateJWT, (req, res) => {
+  res.send(`Bienvenue à l'accueil, ${req.user.username}!`);
+});
+// ##################################### //
+
+// Connexion du serveur sur port
+api.listen(PORT, () => {
+  console.log(`api listening on port ${PORT}`);
+});
 
 console.log(`Server launched on http://localhost:${PORT}/`);
