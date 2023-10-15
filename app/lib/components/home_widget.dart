@@ -103,10 +103,10 @@ class ChangeIndex extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () => onPageSelected(index),
-      child: Text('$index', style: TextStyle(fontSize: 16)),
       style: TextButton.styleFrom(
-        primary: Color(0xFF1A3C8C), // Customize the color as needed
+        primary: const Color(0xFF1A3C8C), // Customize the color as needed
       ),
+      child: Text('$index', style: const TextStyle(fontSize: 16)),
     );
   }
 }

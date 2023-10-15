@@ -1,55 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:app/API/request.dart';
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
-class PasswordTextField extends StatefulWidget {
-  final TextEditingController controller;
-
-  const PasswordTextField({required this.controller, Key? key}) : super(key: key);
-
-  @override
-  State<PasswordTextField> createState() => _PasswordTextFieldState();
-}
-
-class _PasswordTextFieldState extends State<PasswordTextField> {
-  bool _obscureText = true;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.2,
-      margin: const EdgeInsets.only(top: 24),
-      child: TextField(
-        controller: widget.controller,
-        style: const TextStyle(
-            color: Colors.white, fontSize: 18, fontWeight: FontWeight.w400),
-        decoration: InputDecoration(
-          labelText: 'Mot de passe',
-          labelStyle: const TextStyle(
-            color: Color.fromRGBO(255, 255, 255, 0.5),
-            fontSize: 20,
-          ),
-          focusedBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.white,
-            ),
-          ),
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.white,
-            ),
-          ),
-          suffixIcon: IconButton(
-            icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off,
-                color: Colors.white),
-            onPressed: () {
-              setState(() => _obscureText = !_obscureText);
-            },
-          ),
-        ),
-        obscureText: _obscureText,
-      ),
-    );
-  }
-}
 
 class ConnexionScreen extends StatefulWidget {
   const ConnexionScreen({Key? key}) : super(key: key);
@@ -59,23 +12,10 @@ class ConnexionScreen extends StatefulWidget {
 }
 
 class _ConnexionScreenState extends State<ConnexionScreen> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  String errorMessage = '';
-
-  @override
-  void initState() {
-    super.initState();
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
+  final email = TextEditingController();
+  final password = TextEditingController();
+  bool _obscureText = true;
+  bool error = false;
 
   @override
   Widget build(BuildContext context) {
@@ -107,13 +47,11 @@ class _ConnexionScreenState extends State<ConnexionScreen> {
               width: MediaQuery.of(context).size.width * 0.2,
               margin: const EdgeInsets.only(top: 100),
               child: TextField(
-                controller: emailController,
+                controller: email,
                 style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w100,
-                ),
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w100),
                 decoration: const InputDecoration(
                   labelText: 'Email',
                   labelStyle: TextStyle(
@@ -129,14 +67,41 @@ class _ConnexionScreenState extends State<ConnexionScreen> {
                 ),
               ),
             ),
-            PasswordTextField(
-              controller: passwordController,
-            ),
-            Text(
-              errorMessage,
-              style: const TextStyle(
-                color: Color.fromARGB(255, 255, 160, 154),
-                fontSize: 16,
+            Container(
+              width: MediaQuery.of(context).size.width * 0.2,
+              margin: const EdgeInsets.only(top: 24),
+              child: TextField(
+                controller: password,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400),
+                decoration: InputDecoration(
+                  labelText: 'Mot de passe',
+                  labelStyle: const TextStyle(
+                    color: Color.fromRGBO(255, 255, 255, 0.5),
+                    fontSize: 20,
+                  ),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
+                  ),
+                  enabledBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
+                  ),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                        _obscureText ? Icons.visibility : Icons.visibility_off,
+                        color: Colors.white),
+                    onPressed: () {
+                      setState(() => _obscureText = !_obscureText);
+                    },
+                  ),
+                ),
+                obscureText: _obscureText,
               ),
             ),
             Container(
@@ -162,19 +127,18 @@ class _ConnexionScreenState extends State<ConnexionScreen> {
                     },
                   ),
                 ),
-                onPressed: () {
-                  if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-                    setState(() {
-                      errorMessage = 'Please fill in both email and password fields.';
-                    });
-                  } else {
-                    setState(() {
-                      errorMessage = '';
-                    });
+                onPressed: () async {
+                  bool isLogin =
+                      await Request().login(email.text, password.text);
+                  if (isLogin) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const HomeScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreen()),
                     );
+                    setState(() => error = false);
+                  } else {
+                    setState(() => error = true);
                   }
                 },
                 child: const Text(
@@ -186,6 +150,7 @@ class _ConnexionScreenState extends State<ConnexionScreen> {
                 ),
               ),
             ),
+            if (error) const Text("Connection refusée"),
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.2,
