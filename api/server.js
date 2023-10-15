@@ -9,6 +9,7 @@ const PORT = 8080;
 
 const login = require("./routers/login.js");
 const register = require("./routers/register.js");
+const residences = require('./routers/residences.js')
 
 // Permet de récupérer des corps formats JSON
 api.use(bodyParser.json());
@@ -40,6 +41,7 @@ api.get("/", (req, res) => {
 });
 api.use("/login", login);
 api.use("/register", register);
+api.use("/residences", residences);
 // Access only if the user connected
 api.get("/home", authenticateJWT, (req, res) => {
   res.send(`Bienvenue à l'accueil, ${req.user.username}!`);
