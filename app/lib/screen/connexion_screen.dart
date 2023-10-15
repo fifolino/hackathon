@@ -1,53 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:app/API/request.dart';
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
-
-class PasswordTextField extends StatefulWidget {
-  const PasswordTextField({super.key});
-
-  @override
-  State<PasswordTextField> createState() => _PasswordTextFieldState();
-}
-
-class _PasswordTextFieldState extends State<PasswordTextField> {
-  bool _obscureText = true;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.2,
-      margin: const EdgeInsets.only(top: 24),
-      child: TextField(
-        style: const TextStyle(
-            color: Colors.white, fontSize: 18, fontWeight: FontWeight.w400),
-        decoration: InputDecoration(
-          labelText: 'Mot de passe',
-          labelStyle: const TextStyle(
-            color: Color.fromRGBO(255, 255, 255, 0.5),
-            fontSize: 20,
-          ),
-          focusedBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.white,
-            ),
-          ),
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.white,
-            ),
-          ),
-          suffixIcon: IconButton(
-            icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off,
-                color: Colors.white),
-            onPressed: () {
-              setState(() => _obscureText = !_obscureText);
-            },
-          ),
-        ),
-        obscureText: _obscureText,
-      ),
-    );
-  }
-}
 
 class ConnexionScreen extends StatefulWidget {
   const ConnexionScreen({Key? key}) : super(key: key);
@@ -57,6 +12,11 @@ class ConnexionScreen extends StatefulWidget {
 }
 
 class _ConnexionScreenState extends State<ConnexionScreen> {
+  final email = TextEditingController();
+  final password = TextEditingController();
+  bool _obscureText = true;
+  bool error = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,14 +46,13 @@ class _ConnexionScreenState extends State<ConnexionScreen> {
             Container(
               width: MediaQuery.of(context).size.width * 0.2,
               margin: const EdgeInsets.only(top: 100),
-              child: const TextField(
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w100,
-                ),
-                decoration: InputDecoration(
+              child: TextField(
+                controller: email,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w100),
+                decoration: const InputDecoration(
                   labelText: 'Email',
                   labelStyle: TextStyle(
                     color: Color.fromRGBO(255, 255, 255, 0.5),
@@ -108,7 +67,43 @@ class _ConnexionScreenState extends State<ConnexionScreen> {
                 ),
               ),
             ),
-            const PasswordTextField(),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.2,
+              margin: const EdgeInsets.only(top: 24),
+              child: TextField(
+                controller: password,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400),
+                decoration: InputDecoration(
+                  labelText: 'Mot de passe',
+                  labelStyle: const TextStyle(
+                    color: Color.fromRGBO(255, 255, 255, 0.5),
+                    fontSize: 20,
+                  ),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
+                  ),
+                  enabledBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
+                  ),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                        _obscureText ? Icons.visibility : Icons.visibility_off,
+                        color: Colors.white),
+                    onPressed: () {
+                      setState(() => _obscureText = !_obscureText);
+                    },
+                  ),
+                ),
+                obscureText: _obscureText,
+              ),
+            ),
             Container(
               margin: const EdgeInsets.only(top: 100),
               width: 308,
@@ -132,11 +127,19 @@ class _ConnexionScreenState extends State<ConnexionScreen> {
                     },
                   ),
                 ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen()),
-                  );
+                onPressed: () async {
+                  bool isLogin =
+                      await Request().login(email.text, password.text);
+                  if (isLogin) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreen()),
+                    );
+                    setState(() => error = false);
+                  } else {
+                    setState(() => error = true);
+                  }
                 },
                 child: const Text(
                   'Se connecter',
@@ -147,6 +150,7 @@ class _ConnexionScreenState extends State<ConnexionScreen> {
                 ),
               ),
             ),
+            if (error) const Text("Connection refusée"),
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.2,

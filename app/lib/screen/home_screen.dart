@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import '../components/home_widget.dart';
 
@@ -130,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const PrioTable(data: [
                       {
                         "Classement de priorité": "1",
-                        "Code résidence ACM": "0012",
+                        "Résidence ACM": "0012",
                         "Ville": "Montpellier",
                         "Date de construction": "1994",
                         "Prestations": "8",
@@ -140,97 +142,44 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       {
                         "Classement de priorité": "2",
-                        "Code résidence ACM": "0018",
-                        "Ville": "Paris",
+                        "Résidence ACM": "0018",
+                        "Secteur": "Paris",
                         "Date de construction": "2002",
                         "Prestations": "8",
                         "DPE": "C",
                         "GES": "C",
                         "Zone sensible": "Hors QPV",
-                      },
-                      {
-                        "Classement de priorité": "3",
-                        "Code résidence ACM": "0012",
-                        "Ville": "Montpellier",
-                        "Date de construction": "1994",
-                        "Prestations": "8",
-                        "DPE": "D",
-                        "GES": "E",
-                        "Zone sensible": "QPV",
-                      },
-                      {
-                        "Classement de priorité": "4",
-                        "Code résidence ACM": "0018",
-                        "Ville": "Paris",
-                        "Date de construction": "2002",
-                        "Prestations": "8",
-                        "DPE": "C",
-                        "GES": "C",
-                        "Zone sensible": "Hors QPV",
-                      },
-                      {
-                        "Classement de priorité": "5",
-                        "Code résidence ACM": "0012",
-                        "Ville": "Montpellier",
-                        "Date de construction": "1994",
-                        "Prestations": "8",
-                        "DPE": "D",
-                        "GES": "E",
-                        "Zone sensible": "QPV",
-                      },
-                      {
-                        "Classement de priorité": "6",
-                        "Code résidence ACM": "0018",
-                        "Ville": "Paris",
-                        "Date de construction": "2002",
-                        "Prestations": "8",
-                        "DPE": "C",
-                        "GES": "C",
-                        "Zone sensible": "Hors QPV",
-                      },
-                      {
-                        "Classement de priorité": "7",
-                        "Code résidence ACM": "0012",
-                        "Ville": "Montpellier",
-                        "Date de construction": "1994",
-                        "Prestations": "8",
-                        "DPE": "D",
-                        "GES": "E",
-                        "Zone sensible": "QPV",
                       },
                     ]),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            if (selectedPage > 1) {
-                              setState(() {
-                                selectedPage--;
-                              });
-                            }
-                          },
-                          child: Text('<', style: TextStyle(fontSize: 16)),
-                          style:
-                              TextButton.styleFrom(primary: Color(0xFF1A3C8C)),
-                        ),
-                        ChangeIndex(index: 1, onPageSelected: onPageSelected),
-                        ChangeIndex(index: 2, onPageSelected: onPageSelected),
-                        ChangeIndex(index: 3, onPageSelected: onPageSelected),
-                        TextButton(
-                          onPressed: () {
-                            if (selectedPage < 3) {
-                              setState(() {
-                                selectedPage++;
-                              });
-                            }
-                          },
-                          child: Text('>', style: TextStyle(fontSize: 16)),
-                          style:
-                              TextButton.styleFrom(primary: Color(0xFF1A3C8C)),
-                        ),
-                      ],
-                    ),
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      TextButton(
+                        onPressed: () {
+                          if (selectedPage > 1) {
+                            setState(() {
+                              selectedPage--;
+                            });
+                          }
+                        },
+                        style: TextButton.styleFrom(
+                            primary: const Color(0xFF1A3C8C)),
+                        child: const Text('<', style: TextStyle(fontSize: 16)),
+                      ),
+                      ChangeIndex(index: 1, onPageSelected: onPageSelected),
+                      ChangeIndex(index: 2, onPageSelected: onPageSelected),
+                      ChangeIndex(index: 3, onPageSelected: onPageSelected),
+                      TextButton(
+                        onPressed: () {
+                          if (selectedPage < 3) {
+                            setState(() {
+                              selectedPage++;
+                            });
+                          }
+                        },
+                        style: TextButton.styleFrom(
+                            primary: const Color(0xFF1A3C8C)),
+                        child: const Text('>', style: TextStyle(fontSize: 16)),
+                      ),
+                    ]),
                   ]),
             ),
           ),
