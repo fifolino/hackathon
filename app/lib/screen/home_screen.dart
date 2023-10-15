@@ -70,32 +70,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     FilterButton(
                       icon: Icons.stacked_bar_chart,
                       text: "Général",
-                      onClick: () {
-                        setSelected(-1);
-                      },
+                      onClick: () => setSelected(-1),
                       isSelected: isSelected(-1),
                     ),
                     FilterButton(
                       icon: Icons.energy_savings_leaf_outlined,
                       text: "Énergétique",
-                      onClick: () {
-                        setSelected(1);
-                      },
+                      onClick: () => setSelected(1),
                       isSelected: isSelected(1),
                     ),
                     FilterButton(
                       icon: Icons.build_circle_outlined,
                       text: "Prestations",
-                      onClick: () {
-                        setSelected(2);
-                      },
+                      onClick: () => setSelected(2),
                       isSelected: isSelected(2),
                     ),
                   ]),
                   InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
+                    onTap: () => Navigator.pop(context),
                     child: const Row(children: [
                       SizedBox(width: 10),
                       Icon(Icons.logout_outlined, color: Colors.white),
@@ -123,41 +115,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     const Text(
                       'Liste des rénovations par ordre de priorité',
                       style: TextStyle(
-                        color: Color(0xFF1A3C8C),
-                        fontSize: 50,
-                        fontWeight: FontWeight.w700,
-                      ),
+                          color: Color(0xFF1A3C8C),
+                          fontSize: 50,
+                          fontWeight: FontWeight.w700),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.04),
-                    const PrioTable(data: [
-                      {
-                        "Classement de priorité": "1",
-                        "Résidence ACM": "0012",
-                        "Ville": "Montpellier",
-                        "Date de construction": "1994",
-                        "Prestations": "8",
-                        "DPE": "D",
-                        "GES": "E",
-                        "Zone sensible": "QPV",
-                      },
-                      {
-                        "Classement de priorité": "2",
-                        "Résidence ACM": "0018",
-                        "Secteur": "Paris",
-                        "Date de construction": "2002",
-                        "Prestations": "8",
-                        "DPE": "C",
-                        "GES": "C",
-                        "Zone sensible": "Hors QPV",
-                      },
-                    ]),
+                    PrioTable(data: data, page: selectedPage),
+                    const SizedBox(height: 15),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       TextButton(
                         onPressed: () {
                           if (selectedPage > 1) {
-                            setState(() {
-                              selectedPage--;
-                            });
+                            setState(() => selectedPage--);
                           }
                         },
                         style: TextButton.styleFrom(
@@ -170,9 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       TextButton(
                         onPressed: () {
                           if (selectedPage < 3) {
-                            setState(() {
-                              selectedPage++;
-                            });
+                            setState(() => selectedPage++);
                           }
                         },
                         style: TextButton.styleFrom(
@@ -188,3 +155,216 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+var data = [
+  {
+    "Classement de priorité": "1",
+    "Résidence ACM": "0012",
+    "Secteur": "Montpellier",
+    "Date de construction": "1994",
+    "Prestations": "8",
+    "DPE": "D",
+    "GES": "E",
+    "Zone sensible": "QPV",
+  },
+  {
+    "Classement de priorité": "2",
+    "Résidence ACM": "0018",
+    "Secteur": "Paris",
+    "Date de construction": "2002",
+    "Prestations": "8",
+    "DPE": "C",
+    "GES": "C",
+    "Zone sensible": "Hors QPV",
+  },
+  {
+    "Classement de priorité": "3",
+    "Résidence ACM": "0012",
+    "Secteur": "Montpellier",
+    "Date de construction": "1994",
+    "Prestations": "8",
+    "DPE": "D",
+    "GES": "E",
+    "Zone sensible": "QPV",
+  },
+  {
+    "Classement de priorité": "4",
+    "Résidence ACM": "0018",
+    "Secteur": "Paris",
+    "Date de construction": "2002",
+    "Prestations": "8",
+    "DPE": "C",
+    "GES": "C",
+    "Zone sensible": "Hors QPV",
+  },
+  {
+    "Classement de priorité": "5",
+    "Résidence ACM": "0012",
+    "Secteur": "Montpellier",
+    "Date de construction": "1994",
+    "Prestations": "8",
+    "DPE": "D",
+    "GES": "E",
+    "Zone sensible": "QPV",
+  },
+  {
+    "Classement de priorité": "6",
+    "Résidence ACM": "0018",
+    "Secteur": "Paris",
+    "Date de construction": "2002",
+    "Prestations": "8",
+    "DPE": "C",
+    "GES": "C",
+    "Zone sensible": "Hors QPV",
+  },
+  {
+    "Classement de priorité": "7",
+    "Résidence ACM": "0018",
+    "Secteur": "Paris",
+    "Date de construction": "2002",
+    "Prestations": "8",
+    "DPE": "C",
+    "GES": "C",
+    "Zone sensible": "Hors QPV",
+  },
+  {
+    "Classement de priorité": "8",
+    "Résidence ACM": "0012",
+    "Secteur": "Montpellier",
+    "Date de construction": "1994",
+    "Prestations": "8",
+    "DPE": "D",
+    "GES": "E",
+    "Zone sensible": "QPV",
+  },
+  {
+    "Classement de priorité": "9",
+    "Résidence ACM": "0018",
+    "Secteur": "Paris",
+    "Date de construction": "2002",
+    "Prestations": "8",
+    "DPE": "C",
+    "GES": "C",
+    "Zone sensible": "Hors QPV",
+  },
+  {
+    "Classement de priorité": "10",
+    "Résidence ACM": "0012",
+    "Secteur": "Montpellier",
+    "Date de construction": "1994",
+    "Prestations": "8",
+    "DPE": "D",
+    "GES": "E",
+    "Zone sensible": "QPV",
+  },
+  {
+    "Classement de priorité": "11",
+    "Résidence ACM": "0018",
+    "Secteur": "Paris",
+    "Date de construction": "2002",
+    "Prestations": "8",
+    "DPE": "C",
+    "GES": "C",
+    "Zone sensible": "Hors QPV",
+  },
+  {
+    "Classement de priorité": "12",
+    "Résidence ACM": "0012",
+    "Secteur": "Montpellier",
+    "Date de construction": "1994",
+    "Prestations": "8",
+    "DPE": "D",
+    "GES": "E",
+    "Zone sensible": "QPV",
+  },
+  {
+    "Classement de priorité": "13",
+    "Résidence ACM": "0018",
+    "Secteur": "Paris",
+    "Date de construction": "2002",
+    "Prestations": "8",
+    "DPE": "C",
+    "GES": "C",
+    "Zone sensible": "Hors QPV",
+  },
+  {
+    "Classement de priorité": "14",
+    "Résidence ACM": "0018",
+    "Secteur": "Paris",
+    "Date de construction": "2002",
+    "Prestations": "8",
+    "DPE": "C",
+    "GES": "C",
+    "Zone sensible": "Hors QPV",
+  },
+  {
+    "Classement de priorité": "15",
+    "Résidence ACM": "0012",
+    "Secteur": "Montpellier",
+    "Date de construction": "1994",
+    "Prestations": "8",
+    "DPE": "D",
+    "GES": "E",
+    "Zone sensible": "QPV",
+  },
+  {
+    "Classement de priorité": "16",
+    "Résidence ACM": "0018",
+    "Secteur": "Paris",
+    "Date de construction": "2002",
+    "Prestations": "8",
+    "DPE": "C",
+    "GES": "C",
+    "Zone sensible": "Hors QPV",
+  },
+  {
+    "Classement de priorité": "17",
+    "Résidence ACM": "0012",
+    "Secteur": "Montpellier",
+    "Date de construction": "1994",
+    "Prestations": "8",
+    "DPE": "D",
+    "GES": "E",
+    "Zone sensible": "QPV",
+  },
+  {
+    "Classement de priorité": "18",
+    "Résidence ACM": "0018",
+    "Secteur": "Paris",
+    "Date de construction": "2002",
+    "Prestations": "8",
+    "DPE": "C",
+    "GES": "C",
+    "Zone sensible": "Hors QPV",
+  },
+  {
+    "Classement de priorité": "19",
+    "Résidence ACM": "0012",
+    "Secteur": "Montpellier",
+    "Date de construction": "1994",
+    "Prestations": "8",
+    "DPE": "D",
+    "GES": "E",
+    "Zone sensible": "QPV",
+  },
+  {
+    "Classement de priorité": "20",
+    "Résidence ACM": "0018",
+    "Secteur": "Paris",
+    "Date de construction": "2002",
+    "Prestations": "8",
+    "DPE": "C",
+    "GES": "C",
+    "Zone sensible": "Hors QPV",
+  },
+  {
+    "Classement de priorité": "21",
+    "Résidence ACM": "0018",
+    "Secteur": "Paris",
+    "Date de construction": "2002",
+    "Prestations": "8",
+    "DPE": "C",
+    "GES": "C",
+    "Zone sensible": "Hors QPV",
+  },
+];
